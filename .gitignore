@@ -30,3 +30,18 @@ build/
 
 # Misc
 .DS_Store
+
+# Node modules
+node_modules/
+
+# Web build output (only web/dist should be ignored)
+web/dist
+
+AGENTS.md
+
+.opencode/
+
+.specify/
+
+specs/
+

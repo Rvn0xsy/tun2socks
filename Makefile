@@ -2,7 +2,7 @@ BINARY := tun2socks
 MODULE := github.com/xjasonlyu/tun2socks/v2
 
 BUILD_DIR     := build
-BUILD_TAGS    :=
+BUILD_TAGS    := embedded
 BUILD_FLAGS   := -v
 BUILD_COMMIT  := $(shell git rev-parse --short HEAD)
 BUILD_VERSION := $(shell git describe --abbrev=0 --tags HEAD)
@@ -60,6 +60,15 @@ debug: all
 
 tun2socks:
 	$(GO_BUILD) -o $(BUILD_DIR)/$(BINARY)
+
+web:
+	cd web && npm install && npm run build
+	rm -rf restapi/dist
+	cp -r web/dist restapi/dist
+
+embedded: BUILD_TAGS += embedded
+embedded: web
+embedded: tun2socks
 
 darwin-amd64:
 	GOARCH=amd64 GOOS=darwin $(GO_BUILD) -o $(BUILD_DIR)/$(BINARY)-$@
@@ -179,3 +188,5 @@ lint:
 
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -rf restapi/dist
+	rm -rf web/dist
