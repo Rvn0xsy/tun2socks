@@ -63,6 +63,8 @@ tun2socks:
 
 web:
 	cd web && npm install && npm run build
+	rm -rf restapi/dist
+	cp -r web/dist restapi/dist
 
 embedded: BUILD_TAGS += embedded
 embedded: web
@@ -186,3 +188,5 @@ lint:
 
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -rf restapi/dist
+	rm -rf web/dist
